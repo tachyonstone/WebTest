@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<title>HTML5 TIPS</title>
-<script>
-window.addEventListener('DOMContentLoaded',
-  function() {
-    // 結果の表示先（<div>要素）を取得
-    var latitude = document.querySelector('#latitude');
-    var longitude = document.querySelector('#longitude');
-    var heading = document.querySelector('#heading');
-    // Geolocation APIが利用できるかを判定（1）
+  <meta charset="utf-8">
+  <title>位置情報取得サンプル</title>
+
+  <script>
+    // Geolocation APIに対応している
     if (navigator.geolocation) {
-      // 現在の位置情報を取得（2）
-      navigator.geolocation.getCurrentPosition(
-        function(pos) {
-          // 取得した位置情報をページに反映（3）
-          latitude.innerHTML = pos.coords.latitude;
-          longitude.innerHTML = pos.coords.longitude;
-          heading.innerHTML = pos.coords.heading;
-        },
-        ...中略...
-      );
+      alert("この端末では位置情報が取得できます");
+    // Geolocation APIに対応していない
     } else {
-      window.alert('Geolocation API対応ブラウザでアクセスしてください。');
+      alert("この端末では位置情報が取得できません");
     }
-  }, false
-);
-</script>
+
+    // 現在地取得処理
+    function getPosition() {
+      // 現在地を取得
+      navigator.geolocation.getCurrentPosition(
+        // 取得成功した場合
+        function(position) {
+            alert("緯度:"+position.coords.latitude+",経度"+position.coords.longitude);
+        },
+        // 取得失敗した場合
+        function(error) {
+          switch(error.code) {
+            case 1: //PERMISSION_DENIED
+              alert("位置情報の利用が許可されていません");
+              break;
+            case 2: //POSITION_UNAVAILABLE
+              alert("現在位置が取得できませんでした");
+              break;
+            case 3: //TIMEOUT
+              alert("タイムアウトになりました");
+              break;
+            default:
+              alert("その他のエラー(エラーコード:"+error.code+")");
+              break;
+          }
+        }
+      );
+    }
+  </script>
 </head>
 <body>
-<!--Geolocation APIで取得した位置情報を表示-->
-<ul>
-  <li>経度：<span id="latitude"></span></li>
-  <li>緯度：<span id="longitude"></span></li>
-  <li>方角：<span id="heading"></span></li>
-</ul>
+  <h1>位置情報取得サンプル</h1>
+  <button onclick="getPosition();">位置情報を取得する</button>
 </body>
 </html>
-
