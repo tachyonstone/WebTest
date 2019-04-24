@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5 TIPS</title>
+<script>
+window.addEventListener('DOMContentLoaded',
+  function() {
+    // 結果の表示先（<div>要素）を取得
+    var latitude = document.querySelector('#latitude');
+    var longitude = document.querySelector('#longitude');
+    var heading = document.querySelector('#heading');
+    // Geolocation APIが利用できるかを判定（1）
+    if (navigator.geolocation) {
+      // 現在の位置情報を取得（2）
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          // 取得した位置情報をページに反映（3）
+          latitude.innerHTML = pos.coords.latitude;
+          longitude.innerHTML = pos.coords.longitude;
+          heading.innerHTML = pos.coords.heading;
+        },
+        ...中略...
+      );
+    } else {
+      window.alert('Geolocation API対応ブラウザでアクセスしてください。');
+    }
+  }, false
+);
+</script>
+</head>
+<body>
+<!--Geolocation APIで取得した位置情報を表示-->
+<ul>
+  <li>経度：<span id="latitude"></span></li>
+  <li>緯度：<span id="longitude"></span></li>
+  <li>方角：<span id="heading"></span></li>
+</ul>
+</body>
+</html>
+
