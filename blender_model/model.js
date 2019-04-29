@@ -1,5 +1,5 @@
 const loader = new THREE.GLTFLoader();
-const url = 'tamane.gltf';
+const url = 'test.glb';
 
 loader.load(url, (data) => {
 
