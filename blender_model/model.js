@@ -15,14 +15,17 @@ camera.position.set(0, 1, 5);
 const light  = new THREE.AmbientLight(0xffffff, 1);
 scene.add(light);
 
-// メッシュの作成と追加
-const grid   = new THREE.GridHelper(10, 5);
-const sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1),
-  new THREE.MeshPhongMaterial( { color: 0x0074df } )
-);
-sphere.position.set(0, 1, 0);
-scene.add(grid, sphere);
+
+const loader = new THREE.GLTFLoader();
+const url = 'test.glb';
+
+loader.load(url, (data) => {
+
+  const gltf = data;
+  const object = gltf.scene;
+  scene.add(object);
+
+});
 
 // レンダリング
 const animation = () => {
