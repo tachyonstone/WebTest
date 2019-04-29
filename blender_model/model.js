@@ -27,6 +27,17 @@ loader.load(url, (data) => {
 
 });
 
+
+// OrbitControls の追加
+const controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.userPan = false;
+controls.userPanSpeed = 0.0;
+controls.maxDistance = 5000.0;
+controls.maxPolarAngle = Math.PI * 0.495;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.0;
+
+
 // レンダリング
 const animation = () => {
   renderer.render(scene, camera);
