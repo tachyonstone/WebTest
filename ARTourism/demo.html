@@ -57,19 +57,23 @@
 
 <script>
     // スマホのカメラやWebカメラ（mediaDevice）の映像を取得する
-    var media = navigator.mediaDevices.getUserMedia({
-        video: {facingMode: "environment"},             // バックカメラを使う
-        audio: false                                    // 音声は使わない
-    });
-    // mediaDevice の準備ができたら
-    media
-    .then((stream) => {                                 // 取得成功時の関数
-        var cam = document.getElementById("cam");       // video要素を取得
-        cam.src = window.URL.createObjectURL(stream);   // video要素にメディアストリームを入れる
-    })
-    .catch((err) => {                                   // エラー時の関数
-        window.alert(err);                              // 警告ダイアログにエラーを表示
-    });
+    var media = navigator.mediaDevices.getUserMedia({ video: {
+            // スマホのバックカメラを使用
+            facingMode: 'environment'
+        }
+      })
+        .then(function(stream) {
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+          } else {
+            video.src = window.URL.createObjectURL(stream);
+          }
+        })
+        .catch(function(err) {
+          console.log(err.name + ": " + err.message);
+        }
+      );
+
 </script>
 </body>
 </html>
