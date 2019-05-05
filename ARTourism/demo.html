@@ -65,7 +65,9 @@
     media
     .then((stream) => {                                 // 取得成功時の関数
         var cam = document.getElementById("cam");       // video要素を取得
-        cam.src = window.URL.createObjectURL(stream);   // video要素にメディアストリームを入れる
+        //cam.src = window.URL.createObjectURL(stream);   // video要素にメディアストリームを入れる　old
+
+        cam.srcObject = stream;   // video要素にメディアストリームを入れる new
     })
     .catch((err) => {                                   // エラー時の関数
         window.alert(err);                              // 警告ダイアログにエラーを表示
